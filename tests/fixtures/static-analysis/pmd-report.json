@@ -1,0 +1,27 @@
+{
+  "files": [
+    {
+      "filename": "force-app/main/default/classes/Foo.cls",
+      "violations": [
+        {
+          "priority": 1,
+          "rule": "ApexCRUDViolation",
+          "beginline": 42,
+          "description": "critical issue"
+        },
+        {
+          "priority": 3,
+          "rule": "AvoidDebugStatements",
+          "beginline": 12,
+          "description": "warning issue"
+        },
+        {
+          "priority": 5,
+          "rule": "ShortVariable",
+          "beginline": 7,
+          "description": "advisory issue"
+        }
+      ]
+    }
+  ]
+}

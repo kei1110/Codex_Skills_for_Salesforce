@@ -1,0 +1,4 @@
+interface:
+  display_name: "Salesforce Package Release"
+  short_description: "2GP リリース手順を整理する"
+  default_prompt: "Use $salesforce-package-release to coordinate Salesforce package release work, including package version create, install validation, upgrade validation, and release readiness."

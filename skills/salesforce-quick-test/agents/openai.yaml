@@ -1,0 +1,4 @@
+interface:
+  display_name: "Salesforce 差分テスト"
+  short_description: "変更差分だけを高速確認"
+  default_prompt: "Use $salesforce-quick-test to run quick validation for changed Salesforce files, including 差分テスト, targeted Apex tests, and focused Jest runs."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Salesforce Flow Review"
+  short_description: "Flow と宣言的 automation をレビュー"
+  default_prompt: "Use $salesforce-flow-review to review Salesforce Flow, Validation Rule, Approval Process, and Record Type changes."

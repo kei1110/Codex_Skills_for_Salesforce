@@ -1,0 +1,4 @@
+interface:
+  display_name: "Salesforce Package Topology"
+  short_description: "package 境界と依存を確認"
+  default_prompt: "Use $salesforce-package-topology-check to review Salesforce package topology, package dir boundaries, dependencies, and unpackaged metadata placement."

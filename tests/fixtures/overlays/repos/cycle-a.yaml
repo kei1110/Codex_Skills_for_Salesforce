@@ -1,0 +1,4 @@
+schema_version: 3
+kind: repo
+name: cycle-a
+inherits: tests/fixtures/overlays/repos/cycle-b.yaml

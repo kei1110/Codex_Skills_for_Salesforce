@@ -1,0 +1,4 @@
+interface:
+  display_name: "Salesforce デプロイ前確認"
+  short_description: "デプロイ前の軽量整合チェック"
+  default_prompt: "Use $salesforce-deploy-check to run deploy readiness and デプロイ前確認 for a Salesforce repo, including API version, permission, and metadata consistency checks."

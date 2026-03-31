@@ -1,0 +1,40 @@
+schema_version: 3
+kind: workflow
+name: base-workflow
+source:
+  apex:
+    - force-app/base/main/default/classes
+packaging:
+  package_dirs:
+    - force-app/base
+quality_gates:
+  lint:
+    - npm run lint
+  blocking_rules:
+    - workflow rule
+  static_analysis:
+    commands:
+      - name: pmd
+        run: pmd check --format json
+        parser: pmd-json
+    thresholds:
+      critical_max: 0
+      warning_max:
+      advisory_max:
+    blocking_rules:
+      - Critical が 1 件でもあれば FAIL
+context_pruning:
+  roots:
+    source:
+      - source.apex
+      - source.objects
+    docs:
+      - docs.specs
+      - docs.technical
+  dependency_hints:
+    apex_tests:
+      - "*Test.cls"
+    lwc_tests:
+      - "__tests__"
+notes:
+  - workflow note

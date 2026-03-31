@@ -1,0 +1,4 @@
+interface:
+  display_name: "Salesforce レビュー"
+  short_description: "変更差分の不具合とリスクを見る"
+  default_prompt: "Use $salesforce-review to review Salesforce changes for bugs, レビュー, security issues, governor-limit risks, spec drift, and missing tests."

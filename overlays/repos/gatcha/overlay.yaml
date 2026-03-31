@@ -1,0 +1,132 @@
+schema_version: 3
+kind: repo
+name: Gatcha
+inherits: overlays/workflows/2gp-managed-monorepo/overlay.yaml
+source:
+  apex:
+    - force-app/gatcha/main/default/classes
+    - force-app/gatchawork/main/default/classes
+  lwc:
+    - force-app/gatcha/main/default/lwc
+    - force-app/gatchawork/main/default/lwc
+  triggers:
+    - force-app/gatcha/main/default/triggers
+    - force-app/gatchawork/main/default/triggers
+  flows: []
+  objects:
+    - force-app/gatcha/main/default/objects
+    - force-app/gatchawork/main/default/objects
+  permissionsets:
+    - force-app/gatcha/main/default/permissionsets
+    - force-app/gatchawork/main/default/permissionsets
+  permissionsetgroups: []
+  profiles:
+    - unpackaged-metadata/profiles
+  layouts: []
+  recordtypes: []
+  approval_processes:
+    - unpackaged-metadata/approvalProcesses
+  unpackaged:
+    - unpackaged-metadata/profiles
+    - unpackaged-metadata/approvalProcesses
+docs:
+  specs:
+    - docs/SPEC.md
+    - docs/SPEC_WORK.md
+  screens:
+    - docs/SCREENS_WORK.md
+  roadmap:
+    - docs/ROADMAP.md
+    - docs/WORK_ROADMAP.md
+  technical:
+    - docs/technical-setup.md
+  runbooks: []
+packaging:
+  package_dirs:
+    - force-app/gatcha
+    - force-app/gatchawork
+  package_aliases: []
+  namespace:
+  dependencies: []
+  unpackaged_post_deploy:
+    - unpackaged-metadata/profiles
+    - unpackaged-metadata/approvalProcesses
+  install_validation: []
+  upgrade_validation: []
+security:
+  permission_sets:
+    user:
+      - AttendanceUser.permissionset-meta.xml
+      - WorkforceUser.permissionset-meta.xml
+    admin:
+      - AttendanceManager.permissionset-meta.xml
+    elevated:
+      - AttendanceAdmin.permissionset-meta.xml
+      - ResourcePlanner.permissionset-meta.xml
+  permission_set_groups: []
+  muting_permission_sets: []
+  custom_permissions:
+    - Workforce_Approver
+    - Workforce_ResourcePlanner
+  licenses: []
+  record_type_assignments: []
+  ui_visibility: []
+org_bootstrap:
+  scratch_def:
+  default_alias: my-org
+  dev_hub_alias:
+  feature_setup: []
+  settings_setup: []
+  permission_assignments: []
+  user_setup: []
+  seed:
+    - sf apex run --file scripts/seed-demo-data.apex --target-org my-org
+    - sf apex run --file scripts/seed-work-demo-data.apex --target-org my-org
+  manual_steps:
+    - FlexiPage の Activate
+    - 承認プロセスの手動設定
+quality_gates:
+  api_version_check: ./scripts/api-version-check.sh
+  lint:
+    - npm run lint
+  unit_tests:
+    - sf apex run test --test-level RunLocalTests --code-coverage --result-format human --wait 30 --target-org my-org
+    - npm test
+  integration_tests:
+    - npm run test:e2e
+  smoke_tests: []
+  blocking_rules:
+    - package dir ごとの deploy コマンドと test コマンドが定義されていること
+    - permission set/custom permission の整合が取れていること
+  static_analysis:
+    commands:
+      - name: pmd
+        run: pmd check --format json
+        parser: pmd-json
+      - name: sfdx-scanner
+        run: sf scanner run --format json
+        parser: sfdx-scanner-json
+    thresholds:
+      critical_max: 0
+      warning_max:
+      advisory_max:
+    blocking_rules:
+      - Critical が 1 件でもあれば FAIL
+context_pruning:
+  roots:
+    source:
+      - source.apex
+      - source.lwc
+      - source.triggers
+      - source.objects
+    docs:
+      - docs.specs
+      - docs.screens
+      - docs.technical
+  dependency_hints:
+    apex_tests:
+      - '*Test.cls'
+    lwc_tests:
+      - __tests__
+notes:
+  - classes / lwc / triggers / permissionsets / approvalProcesses を重点確認する

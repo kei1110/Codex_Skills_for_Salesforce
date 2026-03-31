@@ -1,0 +1,74 @@
+schema_version: 3
+kind: repo
+name:
+inherits:
+source:
+  apex: []
+  lwc: []
+  triggers: []
+  flows: []
+  objects: []
+  permissionsets: []
+  permissionsetgroups: []
+  profiles: []
+  layouts: []
+  recordtypes: []
+  approval_processes: []
+  unpackaged: []
+docs:
+  specs: []
+  screens: []
+  roadmap: []
+  technical: []
+  runbooks: []
+packaging:
+  package_dirs: []
+  package_aliases: []
+  namespace:
+  dependencies: []
+  unpackaged_post_deploy: []
+  install_validation: []
+  upgrade_validation: []
+security:
+  permission_sets:
+    user: []
+    admin: []
+    elevated: []
+  permission_set_groups: []
+  muting_permission_sets: []
+  custom_permissions: []
+  licenses: []
+  record_type_assignments: []
+  ui_visibility: []
+org_bootstrap:
+  scratch_def:
+  default_alias:
+  dev_hub_alias:
+  feature_setup: []
+  settings_setup: []
+  permission_assignments: []
+  user_setup: []
+  seed: []
+  manual_steps: []
+quality_gates:
+  api_version_check:
+  lint: []
+  unit_tests: []
+  integration_tests: []
+  smoke_tests: []
+  blocking_rules: []
+  static_analysis:
+    commands: []
+    thresholds:
+      critical_max: 0
+      warning_max:
+      advisory_max:
+    blocking_rules: []
+context_pruning:
+  roots:
+    source: []
+    docs: []
+  dependency_hints:
+    apex_tests: []
+    lwc_tests: []
+notes: []

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Salesforce テスト生成"
+  short_description: "Apex テストを生成・補強"
+  default_prompt: "Use $salesforce-gen-test to generate or extend Apex tests, including テスト追加, 異常系補強, 権限テスト, and bulk coverage for a Salesforce class."

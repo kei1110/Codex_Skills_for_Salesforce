@@ -1,0 +1,4 @@
+interface:
+  display_name: "Salesforce 権限確認"
+  short_description: "Permission Set の整合を確認"
+  default_prompt: "Use $salesforce-perm-check to check Salesforce permission alignment, 権限確認, classAccesses, objectPermissions, fieldPermissions, and Custom Permission gates."

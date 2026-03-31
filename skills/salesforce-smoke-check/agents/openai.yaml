@@ -1,0 +1,4 @@
+interface:
+  display_name: "Salesforce Smoke Check"
+  short_description: "deploy 後の最低限確認を行う"
+  default_prompt: "Use $salesforce-smoke-check to run or define Salesforce smoke checks after deploy or seed."

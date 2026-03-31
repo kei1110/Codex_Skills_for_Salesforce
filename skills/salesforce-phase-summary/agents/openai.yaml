@@ -1,0 +1,4 @@
+interface:
+  display_name: "Salesforce フェーズ要約"
+  short_description: "実装フェーズを要約する"
+  default_prompt: "Use $salesforce-phase-summary to summarize a Salesforce delivery phase, including changed files, tests, design notes, and remaining work."

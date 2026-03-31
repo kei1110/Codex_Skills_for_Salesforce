@@ -1,0 +1,4 @@
+interface:
+  display_name: "Salesforce 新規 Trigger"
+  short_description: "Trigger と Handler の雛形を作る"
+  default_prompt: "Use $salesforce-new-trigger to scaffold a Salesforce trigger, handler, service-ready structure, and tests for a new object workflow."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Salesforce Org セットアップ"
+  short_description: "Scratch Org を初期化する"
+  default_prompt: "Use $salesforce-setup-org to create and bootstrap a Salesforce scratch org, including org 作成, 初期セットアップ, and repo-specific deploy steps."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Salesforce Seed Data"
+  short_description: "デモデータを投入する"
+  default_prompt: "Use $salesforce-seed-data to seed demo data into a Salesforce scratch org, including デモデータ投入 and staged package seed execution."

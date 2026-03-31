@@ -1,0 +1,39 @@
+schema_version: 3
+kind: repo
+name: child-repo
+inherits: tests/fixtures/overlays/workflows/base.yaml
+source:
+  apex:
+    - force-app/child/main/default/classes
+  objects:
+    - force-app/child/main/default/objects
+  permissionsets:
+    - force-app/child/main/default/permissionsets
+docs:
+  specs:
+    - docs/specs/child-spec.md
+  technical:
+    - docs/technical/child-technical.md
+packaging:
+  package_dirs:
+    - force-app/child
+security:
+  permission_sets:
+    user:
+      - Child_User.permissionset-meta.xml
+quality_gates:
+  unit_tests:
+    - sf apex run test --target-org child-org
+  static_analysis:
+    commands:
+      - name: sfdx-scanner
+        run: sf scanner run --format json
+        parser: sfdx-scanner-json
+context_pruning:
+  roots:
+    source:
+      - source.apex
+    docs:
+      - docs.specs
+notes:
+  - repo note

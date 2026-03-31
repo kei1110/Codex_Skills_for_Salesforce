@@ -1,0 +1,4 @@
+interface:
+  display_name: "Salesforce 新規 LWC"
+  short_description: "LWC と Apex の雛形を作る"
+  default_prompt: "Use $salesforce-new-lwc to scaffold a new Salesforce LWC, 新規画面, Apex controller, and related tests following repo conventions."

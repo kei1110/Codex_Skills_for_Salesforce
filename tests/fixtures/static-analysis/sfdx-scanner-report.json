@@ -1,0 +1,29 @@
+{
+  "result": [
+    {
+      "violations": [
+        {
+          "severity": "high",
+          "ruleName": "Security-ApexCRUDViolation",
+          "fileName": "force-app/main/default/classes/Foo.cls",
+          "line": 18,
+          "message": "critical issue"
+        },
+        {
+          "severity": "medium",
+          "ruleName": "BestPractices-LongMethod",
+          "fileName": "force-app/main/default/classes/Foo.cls",
+          "line": 25,
+          "message": "warning issue"
+        },
+        {
+          "severity": "low",
+          "ruleName": "CodeStyle-Naming",
+          "fileName": "force-app/main/default/classes/Foo.cls",
+          "line": 30,
+          "message": "advisory issue"
+        }
+      ]
+    }
+  ]
+}

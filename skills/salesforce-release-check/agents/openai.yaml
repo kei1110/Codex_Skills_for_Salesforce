@@ -1,0 +1,4 @@
+interface:
+  display_name: "Salesforce リリース確認"
+  short_description: "総合品質ゲートを回す"
+  default_prompt: "Use $salesforce-release-check to run the Salesforce release gate, including リリース前確認, lint, Jest, Apex tests, spec alignment, and deploy readiness."
