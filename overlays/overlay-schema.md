@@ -48,5 +48,26 @@
 - `inherits` は repo root 基準の相対パス
 - map は再帰マージする
 - list は親 -> 子の順で連結し、重複は初出優先で除去する
+- list は patch syntax も使える
+  - `replace: true` で親 list を捨てる
+  - `values: []` で置換または追加する値を指定する
+  - `remove: []` で最終 list から一致要素を削除する
 - scalar は子が非空なら上書きし、空文字または null は親を継承する
 - `schema_version` は子の値を優先し、現行は `3` のみ許可する
+
+## List Patch Examples
+
+```yaml
+source:
+  apex:
+    replace: true
+    values:
+      - force-app/custom/main/default/classes
+```
+
+```yaml
+quality_gates:
+  smoke_tests:
+    remove:
+      - sf org run smoke --target-org old-sandbox
+```

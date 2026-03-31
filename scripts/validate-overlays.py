@@ -19,8 +19,14 @@ def should_allow_blank_name(path: Path) -> bool:
 def validate_file(path: Path) -> list[str]:
     raw = load_overlay_file(path)
     errors = validate_overlay_shape(raw, path, allow_blank_name=should_allow_blank_name(path))
-    normalized = normalize_overlay(raw)
-    if not should_allow_blank_name(path) and raw.get("kind") == "repo":
+    resolved = None
+    if not errors and not should_allow_blank_name(path):
+        try:
+            resolved, _ = resolve_overlay(path)
+        except OverlayError as exc:
+            errors.append(str(exc))
+    normalized = resolved or normalize_overlay(raw)
+    if not should_allow_blank_name(path) and normalized.get("kind") == "repo":
         if normalized["schema_version"] != 3:
             errors.append(f"{path}: schema_version 3 が必要です")
         if not normalized["packaging"]["package_dirs"]:
@@ -52,11 +58,6 @@ def validate_file(path: Path) -> list[str]:
                     errors.append(f"{path}: static_analysis.commands に {key} が必要です")
             if command.get("parser") and command["parser"] not in allowed_parsers:
                 errors.append(f"{path}: unsupported static analysis parser `{command['parser']}`")
-    if not errors and not should_allow_blank_name(path):
-        try:
-            resolve_overlay(path)
-        except OverlayError as exc:
-            errors.append(str(exc))
     return errors
 
 

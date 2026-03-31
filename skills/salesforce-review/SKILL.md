@@ -49,9 +49,22 @@ Salesforce 変更のレビューを TA 観点で行う。
 
 ## 出力
 
-- `Critical`: 直すべき不具合、権限漏れ、ガバナ破綻、SPEC 逸脱、運用事故候補
-- `Warning`: 設計や将来運用での高リスク項目
-- `Advisory`: 改善案、追加テスト候補、runbook への追記候補
+次のテンプレートで返す。
+
+```md
+## Summary
+## Decision
+## Critical
+## Warning
+## Advisory
+## Missing Evidence
+## Next Actions
+```
+
+- `Decision` は通常 `CONDITIONAL`
+- `Critical` は直すべき不具合、権限漏れ、ガバナ破綻、SPEC 逸脱、運用事故候補
+- `Warning` は設計や将来運用での高リスク項目
+- `Advisory` は改善案、追加テスト候補、runbook への追記候補
 
 ## フォールバック
 

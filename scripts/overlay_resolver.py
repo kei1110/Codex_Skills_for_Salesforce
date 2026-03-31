@@ -137,6 +137,25 @@ def dedupe_list(values: list[Any]) -> list[Any]:
     return result
 
 
+def is_list_patch(value: Any) -> bool:
+    return isinstance(value, dict) and set(value.keys()).issubset({"replace", "values", "remove"})
+
+
+def apply_list_patch(base: list[Any], patch: dict[str, Any]) -> list[Any]:
+    result = [] if patch.get("replace") else deepcopy(base)
+    values = patch.get("values") or []
+    remove = patch.get("remove") or []
+    result = dedupe_list(result + deepcopy(values))
+    if remove:
+        remove_markers = {json.dumps(item, ensure_ascii=False, sort_keys=True) for item in remove}
+        result = [
+            item
+            for item in result
+            if json.dumps(item, ensure_ascii=False, sort_keys=True) not in remove_markers
+        ]
+    return result
+
+
 def merge_with_template(base: Any, child: Any) -> Any:
     if isinstance(base, dict):
         merged: dict[str, Any] = {}
@@ -149,9 +168,11 @@ def merge_with_template(base: Any, child: Any) -> Any:
     if isinstance(base, list):
         if child is None:
             return deepcopy(base)
-        if not isinstance(child, list):
-            raise OverlayError("schema merge 中に list 以外が指定されました")
-        return dedupe_list(deepcopy(base) + deepcopy(child))
+        if isinstance(child, list):
+            return dedupe_list(deepcopy(base) + deepcopy(child))
+        if is_list_patch(child):
+            return apply_list_patch(base, child)
+        raise OverlayError("schema merge 中に list または list patch 以外が指定されました")
     return deepcopy(base) if is_empty_value(child) else child
 
 
@@ -187,8 +208,19 @@ def _validate_against_template(template: Any, value: Any, prefix: str, errors: l
                 _validate_against_template(template_value, value[key], f"{prefix}.{key}", errors)
         return
     if isinstance(template, list):
-        if not isinstance(value, list):
-            errors.append(f"{prefix}: list である必要があります")
+        if isinstance(value, list):
+            return
+        if isinstance(value, dict):
+            unknown = sorted(set(value.keys()) - {"replace", "values", "remove"})
+            for key in unknown:
+                errors.append(f"{prefix}.{key}: 未知の list patch key です")
+            if "replace" in value and not isinstance(value["replace"], bool):
+                errors.append(f"{prefix}.replace: bool である必要があります")
+            for key in ("values", "remove"):
+                if key in value and not isinstance(value[key], list):
+                    errors.append(f"{prefix}.{key}: list である必要があります")
+            return
+        errors.append(f"{prefix}: list または list patch である必要があります")
         return
 
 
@@ -228,7 +260,6 @@ def validate_overlay_shape(data: dict[str, Any], path: Path, *, allow_blank_name
 
 def merge_overlay(parent: dict[str, Any], child: dict[str, Any]) -> dict[str, Any]:
     merged = normalize_overlay(parent)
-    child = normalize_overlay(child)
     for section in (
         "source",
         "docs",
@@ -238,12 +269,12 @@ def merge_overlay(parent: dict[str, Any], child: dict[str, Any]) -> dict[str, An
         "quality_gates",
         "context_pruning",
     ):
-        merged[section] = merge_with_template(merged[section], child[section])
-    merged["notes"] = dedupe_list(deepcopy(merged["notes"]) + deepcopy(child["notes"]))
-    merged["schema_version"] = child["schema_version"]
-    merged["kind"] = child["kind"] if not is_empty_value(child["kind"]) else merged["kind"]
-    merged["name"] = child["name"] if not is_empty_value(child["name"]) else merged["name"]
-    merged["inherits"] = child["inherits"] if not is_empty_value(child["inherits"]) else merged["inherits"]
+        merged[section] = merge_with_template(merged[section], child.get(section))
+    merged["notes"] = merge_with_template(merged["notes"], child.get("notes"))
+    merged["schema_version"] = child.get("schema_version", merged["schema_version"])
+    merged["kind"] = child["kind"] if not is_empty_value(child.get("kind")) else merged["kind"]
+    merged["name"] = child["name"] if not is_empty_value(child.get("name")) else merged["name"]
+    merged["inherits"] = child["inherits"] if not is_empty_value(child.get("inherits")) else merged["inherits"]
     return merged
 
 

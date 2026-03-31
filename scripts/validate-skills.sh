@@ -76,6 +76,15 @@ check_critical_skill_contract() {
   check_required_section "$file" '^## 出力' '出力'
 }
 
+check_output_template() {
+  local file="$1"
+  for label in '## Summary' '## Decision' '## Critical' '## Warning' '## Advisory' '## Missing Evidence' '## Next Actions'; do
+    if ! grep -q "$label" "$file"; then
+      fail "$file: 出力テンプレート $label がありません"
+    fi
+  done
+}
+
 check_contains_text() {
   local file="$1"
   local pattern="$2"
@@ -122,11 +131,27 @@ check_contains_text "$ROOT_DIR/skills/salesforce-review/SKILL.md" 'prune-context
 check_contains_text "$ROOT_DIR/skills/salesforce-review/SKILL.md" 'context-pruning.md' 'context-pruning.md'
 check_contains_text "$ROOT_DIR/skills/salesforce-release-check/SKILL.md" 'static_analysis' 'quality_gates.static_analysis'
 check_contains_text "$ROOT_DIR/skills/salesforce-release-check/SKILL.md" 'static-analysis-gate.md' 'static-analysis-gate.md'
+check_contains_text "$ROOT_DIR/skills/salesforce-release-check/SKILL.md" 'unpackaged-post-deploy-checklist.md' 'unpackaged-post-deploy-checklist.md'
+check_contains_text "$ROOT_DIR/skills/salesforce-release-check/SKILL.md" 'approval-configuration-checklist.md' 'approval-configuration-checklist.md'
 check_contains_text "$ROOT_DIR/skills/salesforce-quick-test/SKILL.md" 'prune-context.py' 'prune-context.py'
 check_contains_text "$ROOT_DIR/skills/salesforce-quick-test/SKILL.md" 'context-pruning.md' 'context-pruning.md'
 check_contains_text "$ROOT_DIR/skills/salesforce-flow-review/SKILL.md" 'prune-context.py' 'prune-context.py'
+check_contains_text "$ROOT_DIR/skills/salesforce-flow-review/SKILL.md" 'flow-risk-checklist.md' 'flow-risk-checklist.md'
+check_contains_text "$ROOT_DIR/skills/salesforce-flow-review/SKILL.md" 'approval-configuration-checklist.md' 'approval-configuration-checklist.md'
 check_contains_text "$ROOT_DIR/skills/salesforce-package-release/SKILL.md" 'static_analysis' 'quality_gates.static_analysis'
 check_contains_text "$ROOT_DIR/skills/salesforce-smoke-check/SKILL.md" 'static_analysis' 'quality_gates.static_analysis'
+check_contains_text "$ROOT_DIR/skills/salesforce-smoke-check/SKILL.md" 'unpackaged-post-deploy-checklist.md' 'unpackaged-post-deploy-checklist.md'
+check_contains_text "$ROOT_DIR/skills/salesforce-smoke-check/SKILL.md" 'approval-configuration-checklist.md' 'approval-configuration-checklist.md'
+
+for templated_skill in \
+  "$ROOT_DIR/skills/salesforce-review/SKILL.md" \
+  "$ROOT_DIR/skills/salesforce-release-check/SKILL.md" \
+  "$ROOT_DIR/skills/salesforce-perm-check/SKILL.md" \
+  "$ROOT_DIR/skills/salesforce-spec-check/SKILL.md" \
+  "$ROOT_DIR/skills/salesforce-flow-review/SKILL.md" \
+  "$ROOT_DIR/skills/salesforce-smoke-check/SKILL.md"; do
+  check_output_template "$templated_skill"
+done
 
 while IFS= read -r readme; do
   dir="$(dirname "$readme")"

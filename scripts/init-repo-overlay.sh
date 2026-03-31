@@ -176,15 +176,17 @@ Codex が最初に使う正本は \`overlay.yaml\` を resolver で解決した 
 ## 作成手順
 
 1. 先に \`overlay.yaml\` を埋める
-2. \`python3 scripts/validate-overlays.py --overlay overlays/repos/$REPO_SLUG/overlay.yaml\` で確認する
-3. 必要なら \`quality_gates.static_analysis\` と \`context_pruning\` を埋める
-4. 必要な背景説明だけこの README に足す
-5. \`./scripts/validate-skills.sh\` で全体確認する
+2. 必要なら \`python3 scripts/discover-overlay.py --workspace-root <repo-path> --name "$DISPLAY_NAME" --pretty\` で初期候補を作る
+3. \`python3 scripts/validate-overlays.py --overlay overlays/repos/$REPO_SLUG/overlay.yaml\` で確認する
+4. 必要なら \`quality_gates.static_analysis\` と \`context_pruning\` を埋める
+5. 必要な背景説明だけこの README に足す
+6. \`./scripts/validate-skills.sh\` で全体確認する
 EOF
 
 echo "[ok] initialized $TARGET_DIR"
 echo "next:"
 echo "  1. overlay.yaml を埋める"
-echo "  2. python3 ./scripts/validate-overlays.py --overlay overlays/repos/$REPO_SLUG/overlay.yaml を実行する"
-echo "  3. README.md に補足を足す"
-echo "  4. ./scripts/validate-skills.sh を実行する"
+echo "  2. 必要なら python3 ./scripts/discover-overlay.py --workspace-root <repo-path> --name \"$DISPLAY_NAME\" --pretty で候補を確認する"
+echo "  3. python3 ./scripts/validate-overlays.py --overlay overlays/repos/$REPO_SLUG/overlay.yaml を実行する"
+echo "  4. README.md に補足を足す"
+echo "  5. ./scripts/validate-skills.sh を実行する"

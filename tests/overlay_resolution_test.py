@@ -44,6 +44,43 @@ class OverlayResolverUnitTest(unittest.TestCase):
         self.assertEqual(["a", "b", "c"], merged["notes"])
         self.assertEqual(["force-app/base", "force-app/child"], merged["source"]["apex"])
 
+    def test_merge_overlay_list_replace(self) -> None:
+        parent = overlay_resolver.normalize_overlay(
+            {
+                "kind": "workflow",
+                "name": "parent",
+                "source": {"apex": ["force-app/base", "force-app/common"]},
+            }
+        )
+        child = {
+            "kind": "repo",
+            "name": "child",
+            "source": {
+                "apex": {
+                    "replace": True,
+                    "values": ["force-app/custom"],
+                }
+            },
+        }
+        merged = overlay_resolver.merge_overlay(parent, child)
+        self.assertEqual(["force-app/custom"], merged["source"]["apex"])
+
+    def test_merge_overlay_list_remove(self) -> None:
+        parent = overlay_resolver.normalize_overlay(
+            {
+                "kind": "workflow",
+                "name": "parent",
+                "quality_gates": {"smoke_tests": ["a", "b", "c"]},
+            }
+        )
+        child = {
+            "kind": "repo",
+            "name": "child",
+            "quality_gates": {"smoke_tests": {"remove": ["b"]}},
+        }
+        merged = overlay_resolver.merge_overlay(parent, child)
+        self.assertEqual(["a", "c"], merged["quality_gates"]["smoke_tests"])
+
 
 @unittest.skipUnless(overlay_resolver.yaml_available(), "PyYAML が未導入")
 class OverlayResolverIntegrationTest(unittest.TestCase):
@@ -94,6 +131,14 @@ class OverlayResolverIntegrationTest(unittest.TestCase):
             overlay_resolver.resolve_overlay(
                 self.fixture("tests/fixtures/overlays/repos/cycle-a.yaml")
             )
+
+    def test_resolve_overlay_applies_list_patch(self) -> None:
+        resolved, _ = overlay_resolver.resolve_overlay(
+            self.fixture("tests/fixtures/overlays/repos/child-patch.yaml")
+        )
+        self.assertEqual(["force-app/override/main/default/classes"], resolved["source"]["apex"])
+        self.assertEqual(["workflow rule", "repo rule"], resolved["quality_gates"]["blocking_rules"])
+        self.assertEqual([], resolved["quality_gates"]["static_analysis"]["commands"])
 
 
 if __name__ == "__main__":

@@ -1,0 +1,32 @@
+schema_version: 3
+kind: repo
+name: child-patch
+inherits: tests/fixtures/overlays/workflows/base.yaml
+source:
+  apex:
+    replace: true
+    values:
+      - force-app/override/main/default/classes
+  objects:
+    - force-app/override/main/default/objects
+  permissionsets:
+    - force-app/override/main/default/permissionsets
+docs:
+  specs:
+    - docs/specs/override-spec.md
+packaging:
+  package_dirs:
+    - force-app/override
+security:
+  permission_sets:
+    user:
+      - Override_User.permissionset-meta.xml
+quality_gates:
+  blocking_rules:
+    - repo rule
+  static_analysis:
+    commands:
+      remove:
+        - name: pmd
+          run: pmd check --format json
+          parser: pmd-json

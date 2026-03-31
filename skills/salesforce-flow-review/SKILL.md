@@ -26,20 +26,36 @@ Flow と宣言的 metadata 変更を重点レビューする。
 - resolver が使えるなら解決済み JSON の `source` と `docs`
 - 差分中心なら `python3 scripts/prune-context.py --repo <repo-slug> --changed-file <metadata-path> --pretty`
 - `references/declarative-automation-checklist.md`
+- `references/flow-risk-checklist.md`
+- `references/approval-configuration-checklist.md`
 
 ## 手順
 
 1. Flow、Validation Rule、Approval Process、Record Type の変更を特定する。
 2. 差分レビューでは `prune-context.py` を使い、関連 metadata と docs を先に絞る。
 3. metadata が担う業務ロジックと仕様を照合する。
-4. Apex との責務重複や順序依存を確認する。
-5. 権限、エラー導線、運用性の観点を確認する。
+4. `references/flow-risk-checklist.md` に沿って entry 条件競合、before-save / after-save の責務混在、再入・ループ、順序依存を確認する。
+5. `references/approval-configuration-checklist.md` に沿って Approval Process の手動設定、通知、承認者経路、UI 到達性を確認する。
+6. Apex との責務重複や順序依存を確認する。
+7. 権限、エラー導線、運用性の観点を確認する。
 
 ## 出力
 
-- `Critical / Warning / Advisory`
-- metadata 側の仕様差分
-- 運用上の注意点
+次のテンプレートで返す。
+
+```md
+## Summary
+## Decision
+## Critical
+## Warning
+## Advisory
+## Missing Evidence
+## Next Actions
+```
+
+- `Decision` は通常 `CONDITIONAL`
+- `Critical` には Flow 条件競合、権限制御欠落、運用事故候補を置く
+- `Missing Evidence` には activation 条件、承認者経路、関連 Layout / Record Type / Permission Set の不足証跡を書く
 
 ## フォールバック
 

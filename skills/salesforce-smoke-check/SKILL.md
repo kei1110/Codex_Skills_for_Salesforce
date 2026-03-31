@@ -24,20 +24,35 @@ deploy / seed 後の最低限の確認を標準化する。
 
 - resolver が使えるなら解決済み JSON の `quality_gates.smoke_tests`
 - `references/smoke-checklist.md`
+- `references/unpackaged-post-deploy-checklist.md`
+- `references/approval-configuration-checklist.md`
 
 ## 手順
 
 1. smoke 対象のユーザー導線と機能導線を決める。
 2. `quality_gates.static_analysis` の未解決 `Critical` が残っていれば smoke の前提不足として扱う。
 3. `quality_gates.smoke_tests` があればそれを基準にする。
-4. 画面導線、代表 CRUD、権限制御、通知や承認導線を確認する。
-5. 手動作業が残っている場合は smoke 完了扱いにしない。
+4. `references/unpackaged-post-deploy-checklist.md` を使って unpackaged metadata 由来の activation、割当、手動作業が完了しているか確認する。
+5. `references/approval-configuration-checklist.md` を使って通知、承認経路、承認対象画面の導線を確認する。
+6. 画面導線、代表 CRUD、権限制御、通知や承認導線を確認する。
+7. 手動作業が残っている場合は smoke 完了扱いにしない。
 
 ## 出力
 
-- `PASS / FAIL / CONDITIONAL`
-- 実施した smoke 項目
-- 未確認の導線
+次のテンプレートで返す。
+
+```md
+## Summary
+## Decision
+## Critical
+## Warning
+## Advisory
+## Missing Evidence
+## Next Actions
+```
+
+- `Decision` は `PASS / FAIL / CONDITIONAL`
+- `Missing Evidence` には未確認導線、未実施 smoke、approval 通知未確認、手動作業の残りを書く
 
 ## フォールバック
 

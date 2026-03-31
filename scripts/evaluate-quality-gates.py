@@ -25,11 +25,12 @@ def main(argv: list[str] | None = None) -> int:
         overlay_path = resolve_overlay_path(repo=args.repo, overlay=args.overlay)
         resolved, _ = resolve_overlay(overlay_path)
         reports = [json.loads(Path(path).read_text(encoding="utf-8")) for path in args.report]
+        blocking_rules = resolved["quality_gates"]["static_analysis"]["blocking_rules"]
         result = evaluate_thresholds(
             reports,
             resolved["quality_gates"]["static_analysis"]["thresholds"],
+            blocking_rules=blocking_rules,
         )
-        result["blocking_rules"] = resolved["quality_gates"]["static_analysis"]["blocking_rules"]
     except (OverlayError, OSError, json.JSONDecodeError) as exc:
         print(f"[error] {exc}", file=sys.stderr)
         return 1

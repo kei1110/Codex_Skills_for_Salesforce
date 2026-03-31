@@ -5,6 +5,8 @@ inherits: tests/fixtures/overlays/workflows/base.yaml
 source:
   apex:
     - force-app/child/main/default/classes
+  lwc:
+    - force-app/child/main/default/lwc
   objects:
     - force-app/child/main/default/objects
   permissionsets:

@@ -1,0 +1,8 @@
+{
+  "scripts": {
+    "lint": "eslint force-app",
+    "test:unit": "jest",
+    "test:integration": "npm run integration",
+    "smoke": "node scripts/smoke.js"
+  }
+}

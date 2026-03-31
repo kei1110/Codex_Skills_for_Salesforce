@@ -98,6 +98,12 @@ python3 scripts/validate-overlays.py
 ./scripts/validate-skills.sh
 ```
 
+既存 repo から overlay の初期候補を出すには次を使う。
+
+```bash
+python3 scripts/discover-overlay.py --workspace-root /path/to/salesforce-repo --name "My Repo" --pretty
+```
+
 静的解析の正規化と quality gate 判定には次を使う。
 
 ```bash
@@ -110,8 +116,9 @@ python3 scripts/evaluate-quality-gates.py --repo <name> --report normalized-repo
 1. `skills/` を企業標準セットとして配布する
 2. repo ごとに `overlays/repos/<repo>/overlay.yaml` へ source / packaging / security / bootstrap / static analysis / pruning を管理する
 3. 新しい repo は `init-repo-overlay.sh` で雛形を切る
-4. Codex は `resolve-overlay.py` で解決済み JSON を取得してから skill を使う
-5. skill 本体を変える前に、overlay で吸収できないかを確認する
+4. 必要なら `discover-overlay.py` で source / docs / permissions / quality gate の初期候補を得る
+5. Codex は `resolve-overlay.py` で解決済み JSON を取得してから skill を使う
+6. skill 本体を変える前に、overlay で吸収できないかを確認する
 
 ## 収録内容
 
@@ -126,9 +133,10 @@ python3 scripts/evaluate-quality-gates.py --repo <name> --report normalized-repo
 1. core skill だけで不足する repo 固有情報を洗う
 2. 既存 workflow overlay で足りるか確認する
 3. `./scripts/init-repo-overlay.sh <repo-slug> <display-name> [workflow-overlay-path]` で雛形を作る
-4. `overlays/repos/<repo-slug>/overlay.yaml` を埋めて repo 固有情報を機械可読化する
-5. `python3 scripts/validate-overlays.py --overlay overlays/repos/<repo-slug>/overlay.yaml` で manifest を確認する
-6. 必要な補足だけ `README.md` に書き、`./scripts/validate-skills.sh` で全体確認する
+4. 必要なら `python3 scripts/discover-overlay.py --workspace-root <repo-path> --name "<display-name>" --pretty` で初期候補を出す
+5. `overlays/repos/<repo-slug>/overlay.yaml` を埋めて repo 固有情報を機械可読化する
+6. `python3 scripts/validate-overlays.py --overlay overlays/repos/<repo-slug>/overlay.yaml` で manifest を確認する
+7. 必要な補足だけ `README.md` に書き、`./scripts/validate-skills.sh` で全体確認する
 
 ## schema v3 の要点
 

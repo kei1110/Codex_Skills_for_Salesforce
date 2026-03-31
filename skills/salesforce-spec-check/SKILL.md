@@ -36,10 +36,21 @@ metadata:
 
 ## 出力
 
-- 判定一覧
-- 仕様との差分
-- metadata 側のギャップ
-- 追加調査が必要な項目
+次のテンプレートで返す。
+
+```md
+## Summary
+## Decision
+## Critical
+## Warning
+## Advisory
+## Missing Evidence
+## Next Actions
+```
+
+- `Decision` は通常 `CONDITIONAL`
+- `Critical` には重大な仕様逸脱や release blocker を置く
+- `Missing Evidence` には仕様書不足や metadata coverage 不足を書く
 
 ## フォールバック
 

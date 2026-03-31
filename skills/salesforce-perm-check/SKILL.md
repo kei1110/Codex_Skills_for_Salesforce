@@ -38,9 +38,22 @@ Controller と metadata の権限制御を TA 観点で確認する。
 
 ## 出力
 
-- `Critical`: 入口制御欠落、PSG/muting の破綻、Record Type/visibility の重大漏れ
-- `Warning`: 将来事故りやすい権限制御
-- `Advisory`: 運用上の改善案
+次のテンプレートで返す。
+
+```md
+## Summary
+## Decision
+## Critical
+## Warning
+## Advisory
+## Missing Evidence
+## Next Actions
+```
+
+- `Decision` は通常 `CONDITIONAL`
+- `Critical` は入口制御欠落、PSG/muting の破綻、Record Type/visibility の重大漏れ
+- `Warning` は将来事故りやすい権限制御
+- `Advisory` は運用上の改善案
 
 ## 注意
 

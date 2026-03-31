@@ -72,3 +72,15 @@ context_pruning:
     apex_tests: []
     lwc_tests: []
 notes: []
+
+# list field は patch syntax も使える
+# 例:
+# source:
+#   apex:
+#     replace: true
+#     values:
+#       - force-app/custom/main/default/classes
+# quality_gates:
+#   smoke_tests:
+#     remove:
+#       - sf org run smoke --target-org old-sandbox
