@@ -157,8 +157,8 @@ python3 -m unittest discover -s tests -p '*_test.py'
 
 ## 詳細ドキュメント
 
-- [アーキテクチャ](/Users/Eoh/workspace/Codex_Skills_for_Salesforce/docs/architecture.md)
-- [repo onboarding](/Users/Eoh/workspace/Codex_Skills_for_Salesforce/docs/onboarding.md)
-- [導入チェックリスト](/Users/Eoh/workspace/Codex_Skills_for_Salesforce/docs/adoption-checklist.md)
-- [skill authoring](/Users/Eoh/workspace/Codex_Skills_for_Salesforce/docs/skill-authoring.md)
-- [直近の実装計画](/Users/Eoh/workspace/Codex_Skills_for_Salesforce/docs/implementation-plan-next-batch.md)
+- [アーキテクチャ](docs/architecture.md)
+- [repo onboarding](docs/onboarding.md)
+- [導入チェックリスト](docs/adoption-checklist.md)
+- [skill authoring](docs/skill-authoring.md)
+- [直近の実装計画](docs/implementation-plan-next-batch.md)
