@@ -11,9 +11,11 @@
 - 更新順序が暗黙依存になっていないか
 - 再入やループで意図せず再実行しないか
 - 非同期処理や通知との順序が破綻していないか
+- current user / automated user / system context の違いで結果が変わらないか
 
 ## 運用性
 
 - Activation 条件が明確か
 - 失敗時のエラー導線と復旧方法が分かるか
 - Record Type / Layout / Permission Set と齟齬がないか
+- source deploy、package install、手動設定のどこで有効化されるか明確か

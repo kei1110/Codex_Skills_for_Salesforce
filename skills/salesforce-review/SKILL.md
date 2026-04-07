@@ -32,6 +32,7 @@ Salesforce 変更のレビューを TA 観点で行う。
 - `references/soql-budget-analyzer.md`
 - `references/bulk-scenario-tester.md`
 - `references/test-coverage-analyzer.md`
+- `references/change-sync-checklist.md`
 - `references/spec-compliance-reviewer.md`
 - `references/operability-runbook.md`
 - `references/context-pruning.md`
@@ -43,9 +44,10 @@ Salesforce 変更のレビューを TA 観点で行う。
 3. 差分レビューでは `prune-context.py` を使い、読む source / docs / tests を絞る。
 4. static analysis の正規化結果があるなら AI 所見とは分けて先に読む。
 5. Apex / Trigger / LWC / metadata / packaging に分ける。
-6. 実装品質、セキュリティ、SPEC 整合、運用性を順に見る。
-7. LDV / selectivity / mixed DML / async chain / lock contention / package 境界の観点を追加で見る。
-8. 指摘を `Critical / Warning / Advisory` で統合する。
+6. 変更種別ごとに Permission Set / Profile / FlexiPage / Tab / App / test / docs などの連動更新漏れを確認する。
+7. 実装品質、セキュリティ、SPEC 整合、運用性を順に見る。
+8. LDV / selectivity / mixed DML / async chain / lock contention / package 境界の観点を追加で見る。
+9. 指摘を `Critical / Warning / Advisory` で統合する。
 
 ## 出力
 

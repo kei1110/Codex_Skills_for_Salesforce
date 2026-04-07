@@ -32,9 +32,10 @@ Apex クラスのテストを新規作成、または不足パスだけ補う。
    - 境界値
    - 権限
    - Bulk
-4. repo に既存の TestDataFactory や共通 builder があれば優先利用する。
-5. `Test.startTest()` / `Test.stopTest()` をガバナ境界と非同期検証のために正しく配置する。
-6. 期待結果は例外メッセージより振る舞い、戻り値、DML 結果で確認する。
+4. repo に既存の TestDataFactory や共通 builder があれば優先利用し、User 作成や Permission Set 割当はできるだけ `@TestSetup` に寄せる。
+5. Controller 系は最小権限ユーザーで `System.runAs()` し、権限あり / 権限なしの両パスを分ける。
+6. `Test.startTest()` / `Test.stopTest()` をガバナ境界と非同期検証のために正しく配置する。
+7. 期待結果は例外メッセージより振る舞い、戻り値、DML 結果で確認し、例外系は fail-fast で書く。
 
 ## 出力
 
@@ -50,3 +51,5 @@ Apex クラスのテストを新規作成、または不足パスだけ補う。
 - `AuraHandledException` のメッセージ検証はしない
 - `without sharing` Controller は Permission Set / Custom Permission を通す前提で作る
 - `SeeAllData=true` は避ける
+- `System.runAs` の中で User 作成や権限割当を行うと Mixed DML になりやすい
+- Private OWD を前提にするテストは owner 文脈まで再現しないと偽陽性になる

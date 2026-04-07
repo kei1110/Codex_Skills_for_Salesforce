@@ -11,12 +11,14 @@
 
 - package dir ごとの deploy 順序
 - unpackaged metadata の deploy 有無
+- unpackaged metadata のうち自動 deploy 対象と手動設定対象が分かれているか
 - 初期ユーザー作成や Permission Set 割当の有無
 
 ## 手動作業
 
 - FlexiPage の Activate
 - Experience Cloud や承認プロセスなど手動設定
+- 承認者経路に必要な role hierarchy、queue、public group の準備
 - 別ユーザーでのログイン確認
 
 ## 完了判定
