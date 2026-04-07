@@ -22,3 +22,9 @@
 - Apex / Trigger
 - FlexiPage / Tab / App
 - Permission Set / Profile
+
+## unpackaged metadata
+
+- package 本体と package 外 metadata のどちらをどの経路で送るか明確か
+- local、CI、release で deploy 対象の差がないか
+- source deploy できない approval template や手動 activation が混ざる場合、その扱いが明確か

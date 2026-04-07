@@ -34,10 +34,10 @@ Flow と宣言的 metadata 変更を重点レビューする。
 1. Flow、Validation Rule、Approval Process、Record Type の変更を特定する。
 2. 差分レビューでは `prune-context.py` を使い、関連 metadata と docs を先に絞る。
 3. metadata が担う業務ロジックと仕様を照合する。
-4. `references/flow-risk-checklist.md` に沿って entry 条件競合、before-save / after-save の責務混在、再入・ループ、順序依存を確認する。
-5. `references/approval-configuration-checklist.md` に沿って Approval Process の手動設定、通知、承認者経路、UI 到達性を確認する。
+4. `references/flow-risk-checklist.md` に沿って entry 条件競合、before-save / after-save の責務混在、再入・ループ、順序依存、実行主体の差を確認する。
+5. `references/approval-configuration-checklist.md` に沿って Approval Process が source deploy 対象か手動テンプレートかを切り分け、手動設定、通知、承認者経路、UI 到達性を確認する。
 6. Apex との責務重複や順序依存を確認する。
-7. 権限、エラー導線、運用性の観点を確認する。
+7. 権限、エラー導線、unpackaged metadata、運用性の観点を確認する。
 
 ## 出力
 

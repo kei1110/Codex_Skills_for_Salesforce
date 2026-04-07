@@ -8,6 +8,20 @@ from copy import deepcopy
 from pathlib import Path
 from typing import Any
 
+
+def inject_repo_site_packages() -> None:
+    repo_root = Path(__file__).resolve().parent.parent
+    lib_dir = repo_root / ".venv" / "lib"
+    if not lib_dir.is_dir():
+        return
+    for site_packages in sorted(lib_dir.glob("python*/site-packages")):
+        site_packages_str = str(site_packages)
+        if site_packages_str not in sys.path:
+            sys.path.insert(0, site_packages_str)
+
+
+inject_repo_site_packages()
+
 try:
     import yaml
 except ModuleNotFoundError:  # pragma: no cover
@@ -117,7 +131,7 @@ def yaml_available() -> bool:
 def require_yaml() -> None:
     if yaml is None:
         raise OverlayError(
-            "PyYAML が必要です。`python3 -m pip install -r scripts/requirements.txt` を実行してください。"
+            "PyYAML が必要です。`python3 -m venv .venv && .venv/bin/pip install -r scripts/requirements.txt` を実行してください。"
         )
 
 

@@ -37,8 +37,8 @@ metadata:
 3. `quality_gates.static_analysis` が定義されていれば、PMD / SFDX Scanner の結果を `parse-static-analysis.py` で正規化し、`evaluate-quality-gates.py` で閾値判定する。
 4. `quality_gates.lint`、`quality_gates.unit_tests`、`quality_gates.integration_tests` を順に確認する。
 5. `references/packaging-architect.md` に沿って package topology、dependency、install / upgrade validation を確認する。
-6. `references/unpackaged-post-deploy-checklist.md` に沿って `source.unpackaged` の deploy 順序、package 外 metadata、手動作業、後続 smoke を確認する。
-7. `references/approval-configuration-checklist.md` に沿って `source.approval_processes`、関連通知、承認者経路、手動 activation を確認する。
+6. `references/unpackaged-post-deploy-checklist.md` に沿って `source.unpackaged` の deploy 順序、環境ごとの deploy path 差、package 外 metadata、手動作業、後続 smoke を確認する。
+7. `references/approval-configuration-checklist.md` に沿って `source.approval_processes` が source deploy 対象か手動テンプレートかを切り分け、関連通知、承認者経路、手動 activation を確認する。
 8. `security` と `source.unpackaged` / `source.approval_processes` を見て permission / unpackaged metadata の整合を確認する。
 9. `quality_gates.smoke_tests` があれば release 前 smoke として確認する。
 10. `quality_gates.blocking_rules` と `quality_gates.static_analysis.blocking_rules` を満たしているかで `PASS / FAIL / CONDITIONAL` を判定する。
